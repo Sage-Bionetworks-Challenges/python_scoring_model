@@ -12,12 +12,41 @@ def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-e", "--entity_type", required=True,
                         help="Downloaded Synapse entity type")
-    parser.add_argument("-s", "--submission_file",
+    parser.add_argument("-s", "--submission",
                         help="Submission file")
     parser.add_argument("-r", "--results", required=True,
                         help="Validations output file")
-
+    parser.add_argument("-q", "--question", required=True,
+                        type=int, help="Question number")
     return parser.parse_args()
+
+
+def validate_sc1(pred):
+    """Validation function for sub-challenge 1.
+
+    TODO:
+        Edit this function for your validation purposes.
+    """
+    errors = []
+    if not pred.startswith("test"):
+        errors.append("Submission must have a `test` column")
+    if not pred.endswith("value"):
+        errors.append("Submission must have a `value` column")
+    return errors
+
+
+def validate_sc2(pred):
+    """Validation function for sub-challenge 2.
+
+    TODO:
+        Edit this function for your validation purposes.
+    """
+    errors = []
+    if not pred.startswith("test"):
+        errors.append("Submission must have a `test` column")
+    if not pred.endswith("value"):
+        errors.append("Submission must have a `value` column")
+    return errors
 
 
 def main():
@@ -31,12 +60,16 @@ def main():
         )
 
     else:
-        with open(args.submission_file, "r") as sub_file:
+        # This will map the sub-challenge to its respective validation
+        # tests. Feel free to remove this mapping if all sub-challenges
+        # are using the same predictions file.
+        validation_func_mapping = {1: validate_sc1,
+                                   2: validate_sc2}
 
-            ## Sample validation test ##
-            message = sub_file.read()
-            if not message.startswith("test"):
-                invalid_reasons.append("Submission must have test column")
+        with open(args.submission, "r") as sub_file:
+            pred = sub_file.read()
+            errors_found = validation_func_mapping[args.questions](pred)
+            invalid_reasons.extend(errors_found)
 
     prediction_file_status = "INVALID" if invalid_reasons else "VALIDATED"
 
