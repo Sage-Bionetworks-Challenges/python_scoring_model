@@ -47,7 +47,8 @@ def main():
     """Main function."""
     args = get_args()
 
-    # This will map the sub-challenge to its respective scoring algorithms.
+    # This will map the sub-challenge to its respective scoring
+    # algorithms.
     scoring_func_mapping = {1: score_sc1,
                             2: score_sc2}
 
