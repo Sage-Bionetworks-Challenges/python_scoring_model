@@ -1,14 +1,14 @@
 # Scoring Model in Python
 This repository will serve as a template for a scoring model written in Python.  Base scripts include one script for validation and another for scoring, as well as a Dockerfile.
 
-If additional validation and/or scoring scripts are needed, e.g. each sub-challenge requires a different scoring script, they must be `COPY`'d over in the Dockerfile (so don't forget to update!).
+If additional input files are needed, they must be `COPY`'d over so that they're available during the container run (so don't forget to update the Dockerfile!).
 
 ## Steps
-1. update validate.py. A basic template and an example validation test is provided in the script as reference.
+1. update the validation functions within [validate.py](https://raw.githubusercontent.com/Sage-Bionetworks-Challenges/python_scoring_model/main/validate.py) (e.g. `validate_sc1()`). The script is already written so that these functions are wrapped to the corresponding sub-challenge question.  Create and edit additional validation functions as needed.
 
-2. update score.py. A basic template and an example scoring algorithm is provided in the script as reference.
+2. update the scoring functions within [score.py](https://raw.githubusercontent.com/Sage-Bionetworks-Challenges/python_scoring_model/main/score.py) (e.g. `score_sc1()`). Similar to validate.py, the script is already written so that these functions are wrapped to the corresponding sub-challenge question.  Create and edit additional scoring functions as needed.
 
-3. if necessary, update Dockerfile.
+3. if necessary, update [Dockerfile](https://raw.githubusercontent.com/Sage-Bionetworks-Challenges/python_scoring_model/main/Dockerfile).
 
 4. build a Docker image with the following command:
 
